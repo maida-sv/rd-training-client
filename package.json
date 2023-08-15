@@ -1,0 +1,9 @@
+{
+  "name": "rd-training-client-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@simpleview/sv-graphql-client": "^4.0.0"
+  }
+}
