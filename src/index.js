@@ -1,5 +1,5 @@
-const MoviePrefix = require('./moviePrefix');
+const TrainingPrefix = require('./trainingPrefix');
 
 module.exports = {
-  MoviePrefix,
+  TrainingPrefix,
 };
