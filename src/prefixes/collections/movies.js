@@ -1,26 +1,12 @@
 const { query } = require('@simpleview/sv-graphql-client');
 
-class MoviesCollection {
+class Movies {
   constructor({ graphUrl, graphServer }) {
     this._graphUrl = graphUrl;
     this._graphServer = graphServer;
   }
 
-  async find({ fields, context, input }) {
-    if (!input) {
-      return res.json({ success: false, message: 'No input provided' });
-    }
-  
-    try {
-      input = JSON.parse(input);
-    } catch (error) {
-      return res.json({ success: false, message: 'Invalid JSON' });
-    }
-  
-    if (input.release_date && !validateDate(input.release_date)){
-      return res.json({ success: false, message: 'Invalid release date' });
-    }
-
+  async find({ fields, context, input, headers}) {
     const query = `
       query Movies_find($fields: String!, $context: String!, $input: training_movies_find_input) {
         training {
@@ -45,10 +31,6 @@ class MoviesCollection {
       input,
     };
 
-    const headers = {
-      Accept: 'application/json',
-    };
-
     const result = await query({
       query, 
       variables, 
@@ -60,31 +42,7 @@ class MoviesCollection {
     return result.data.training.movies_find;
   }
 
-  async insert({ fields, context, input }) {
-    if (input === undefined) {
-      return res.json({ success: false, message: 'No input provided' });
-    }
-  
-    try {
-      input = JSON.parse(input);
-    } catch (error) {
-      return res.json({ success: false, message: 'Invalid JSON' });
-    }
-  
-    input.forEach(function({title, release_date}) {
-      if (title === undefined) {
-        return res.json({ success: false, message: 'Missing title' });
-      }
-  
-      if (release_date === undefined) {
-        return res.json({ success: false, message: 'Missing release date' });
-      }
-  
-      if (!validateDate(release_date)){
-        return res.json({ success: false, message: 'Invalid release date' });
-      }
-    })
-  
+  async insert({ fields, context, input, headers}) {
     const query = `
       mutation Movies_insert($input: [training_movies_insert_input!]!) {
         training {
@@ -100,10 +58,6 @@ class MoviesCollection {
       input,
     };
 
-    const headers = {
-      Accept: 'application/json',
-    };
-
     const result = await query({
       query, 
       variables, 
@@ -115,7 +69,7 @@ class MoviesCollection {
     return result.data.training.movies_insert;
   }
 
-  async remove({ fields, context, input }) {
+  async remove({ fields, context, input, headers}) {
     if (!input) {
       return res.json({ success: false, message: 'No input provided' });
     }
@@ -145,10 +99,6 @@ class MoviesCollection {
       input,
     };
 
-    const headers = {
-      Accept: 'application/json',
-    };
-
     const result = await query({
       query, 
       variables, 
@@ -162,4 +112,4 @@ class MoviesCollection {
 
 }
 
-module.exports = MoviesCollection;
+module.exports = Movies;
