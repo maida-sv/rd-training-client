@@ -1,6 +1,6 @@
 const MoviesCollection = require('./collections/Movies');
 
-class YourPrefix {
+class MoviePrefix {
     constructor({ graphUrl, graphServer }) {
       this._name = "training";
       this._graphUrl = graphUrl;
@@ -10,4 +10,4 @@ class YourPrefix {
     }
   }
   
-  module.exports = YourPrefix;
+  module.exports = MoviePrefix;
