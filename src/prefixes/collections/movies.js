@@ -11,17 +11,7 @@ class Movies {
       query Movies_find($fields: String!, $context: String!, $input: training_movies_find_input) {
         training {
           movies_find(fields: $fields, context: $context, input: $input) {
-            docs {
-              title
-              release_date
-              id
-              director {
-                id
-                first_name
-                last_name
-              }
-              director_id
-            }
+            ${fields}
           }
         }
       }
@@ -46,8 +36,7 @@ class Movies {
       mutation Movies_insert($input: [training_movies_insert_input!]!) {
         training {
           movies_insert(input: $input) {
-            success
-            message
+            ${fields}
           }
         }
       }
@@ -68,26 +57,11 @@ class Movies {
   }
 
   async remove({ fields, context, input, headers}) {
-    if (!input) {
-      return res.json({ success: false, message: 'No input provided' });
-    }
-  
-    try {
-      input = JSON.parse(input);
-    } catch (error) {
-      return res.json({ success: false, message: 'Invalid JSON' });
-    }
-  
-    if (!input.id) {
-      return res.json({ success: false, message: 'No movie IDs provided' });
-    }
-  
     const query = `
       mutation Movies_remove($input: training_movies_remove_input) {
         training{
           movies_remove(input: $input) {
-            success
-            message
+            ${fields}
           }
         }
       }
