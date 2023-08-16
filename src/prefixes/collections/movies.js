@@ -2,8 +2,8 @@ const { query } = require('@simpleview/sv-graphql-client');
 
 class Movies {
   constructor({ graphUrl, graphServer }) {
-    this._graphUrl = graphUrl;
-    this._graphServer = graphServer;
+    this.graphUrl = graphUrl;
+    this.graphServer = graphServer;
   }
 
   async find({ fields, context, input, headers}) {
@@ -24,7 +24,7 @@ class Movies {
     return result = await query({
       query, 
       variables, 
-      url: _graphUrl,
+      url: this._graphUrl,
       headers,
       key: "",
       clean: true
@@ -49,7 +49,7 @@ class Movies {
     return result = await query({
       query, 
       variables, 
-      url: _graphUrl,
+      url: this._graphUrl,
       headers,
       key: "",
       clean: true
@@ -74,7 +74,7 @@ class Movies {
     return result = await query({
       query, 
       variables, 
-      url: _graphUrl,
+      url: this._graphUrl,
       headers,
       key: "",
       clean: true
