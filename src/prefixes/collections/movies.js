@@ -31,15 +31,14 @@ class Movies {
       input,
     };
 
-    const result = await query({
+    return result = await query({
       query, 
       variables, 
       url: _graphUrl,
       headers,
+      key: "",
       clean: true
     });
-
-    return result.data.training.movies_find;
   }
 
   async insert({ fields, context, input, headers}) {
@@ -58,15 +57,14 @@ class Movies {
       input,
     };
 
-    const result = await query({
+    return result = await query({
       query, 
       variables, 
       url: _graphUrl,
       headers,
+      key: "",
       clean: true
     });
-
-    return result.data.training.movies_insert;
   }
 
   async remove({ fields, context, input, headers}) {
@@ -99,15 +97,14 @@ class Movies {
       input,
     };
 
-    const result = await query({
+    return result = await query({
       query, 
       variables, 
       url: _graphUrl,
       headers,
+      key: "",
       clean: true
     });
-
-    return result.data.training.movies_remove;
   }
 
 }
