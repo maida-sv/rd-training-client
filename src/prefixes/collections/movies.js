@@ -2,15 +2,15 @@ const { query } = require('@simpleview/sv-graphql-client');
 
 class Movies {
   constructor({ graphUrl, graphServer }) {
-    this.graphUrl = graphUrl;
-    this.graphServer = graphServer;
+    this._graphUrl = graphUrl;
+    this._graphServer = graphServer;
   }
 
   async find({ fields, context, input, headers}) {
-    const query = `
-      query Movies_find($fields: String!, $context: String!, $input: training_movies_find_input) {
+    const queryStr = `
+      query Movies_find($input: training_movies_find_input) {
         training {
-          movies_find(fields: $fields, context: $context, input: $input) {
+          movies_find(input: $input) {
             ${fields}
           }
         }
@@ -21,18 +21,20 @@ class Movies {
       input,
     };
 
-    return result = await query({
-      query, 
+    const result = await query({
+      query: queryStr, 
       variables, 
       url: this._graphUrl,
       headers,
-      key: "",
+      key: "training.movies_find.docs",
       clean: true
     });
+
+    return result
   }
 
   async insert({ fields, context, input, headers}) {
-    const query = `
+    const queryStr = `
       mutation Movies_insert($input: [training_movies_insert_input!]!) {
         training {
           movies_insert(input: $input) {
@@ -46,18 +48,20 @@ class Movies {
       input,
     };
 
-    return result = await query({
-      query, 
+    const result = await query({
+      query: queryStr, 
       variables, 
       url: this._graphUrl,
       headers,
-      key: "",
+      key: "training.movies_insert",
       clean: true
     });
+
+    return result
   }
 
   async remove({ fields, context, input, headers}) {
-    const query = `
+    const queryStr = `
       mutation Movies_remove($input: training_movies_remove_input) {
         training{
           movies_remove(input: $input) {
@@ -71,14 +75,16 @@ class Movies {
       input,
     };
 
-    return result = await query({
-      query, 
+    const result = await query({
+      query: queryStr, 
       variables, 
       url: this._graphUrl,
       headers,
-      key: "",
+      key: "training.movies_remove",
       clean: true
     });
+
+    return result
   }
 
 }
