@@ -21,7 +21,7 @@ class People {
       input,
     };
 
-    return result = await query({
+    const result = await query({
       query, 
       variables, 
       url: _graphUrl,
@@ -29,6 +29,8 @@ class People {
       key: "training.people_find",
       clean: true
     });
+
+    return result
   }
 
   async insert({ fields, context, input, headers}) {
@@ -46,14 +48,16 @@ class People {
       input,
     };
 
-    return result = await query({
+    const result = await query({
       query, 
       variables, 
       url: _graphUrl,
       headers,
-      key: "",
+      key: "training.people_insert",
       clean: true
     });
+
+    return result
   }
 
   async remove({ fields, context, input, headers}) {
@@ -71,14 +75,16 @@ class People {
       input,
     };
 
-    return result = await query({
+    const result = await query({
       query, 
       variables, 
       url: _graphUrl,
       headers,
-      key: "",
+      key: "training.people_remove",
       clean: true
     });
+
+    return result
   }
 
 }
