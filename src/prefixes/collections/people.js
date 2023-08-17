@@ -7,7 +7,7 @@ class People {
   }
 
   async find({ fields, context, input, headers}) {
-    const query = `
+    const queryStr = `
       query People_find($input: training_people_find_input) {
         training {
           people_find(input: $input) {
@@ -22,9 +22,9 @@ class People {
     };
 
     const result = await query({
-      query, 
+      query: queryStr, 
       variables, 
-      url: _graphUrl,
+      url: this._graphUrl,
       headers,
       key: "training.people_find",
       clean: true
@@ -34,7 +34,7 @@ class People {
   }
 
   async insert({ fields, context, input, headers}) {
-    const query = `
+    const queryStr = `
       mutation People_insert($input: [training_people_insert_input!]!) {
         training {
           people_insert(input: $input) {
@@ -49,9 +49,9 @@ class People {
     };
 
     const result = await query({
-      query, 
+      query: queryStr, 
       variables, 
-      url: _graphUrl,
+      url: this._graphUrl,
       headers,
       key: "training.people_insert",
       clean: true
@@ -61,7 +61,7 @@ class People {
   }
 
   async remove({ fields, context, input, headers}) {
-    const query = `
+    const queryStr = `
       mutation People_remove($input: training_people_remove_input) {
         training {
           people_remove(input: $input) {
@@ -76,9 +76,9 @@ class People {
     };
 
     const result = await query({
-      query, 
+      query: queryStr, 
       variables, 
-      url: _graphUrl,
+      url: this._graphUrl,
       headers,
       key: "training.people_remove",
       clean: true
