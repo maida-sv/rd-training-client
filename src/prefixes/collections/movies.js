@@ -7,33 +7,31 @@ class Movies {
   }
 
   async find({ fields, context, input, headers}) {
-    const queryStr = `
-      query Movies_find($input: training_movies_find_input) {
-        training {
-          movies_find(input: $input) {
-            ${fields}
-          }
-        }
-      }
-    `;
-
     const variables = {
       input,
     };
 
     const result = await query({
-      query: queryStr, 
+      query: `
+        query Movies_find($input: training_movies_find_input) {
+          training {
+            movies_find(input: $input) {
+              ${fields}
+            }
+          }
+        }
+      `, 
       variables, 
       url: this._graphUrl,
       headers,
-      key: "training.movies_find.docs",
+      key: "training.movies_find",
       clean: true
     });
 
     return result
   }
 
-  async insert({ fields, context, input, headers}) {
+  async insert({ fields, context, input, headers}) { //TODO: fix formatting 
     const queryStr = `
       mutation Movies_insert($input: [training_movies_insert_input!]!) {
         training {
