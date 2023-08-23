@@ -31,23 +31,21 @@ class Movies {
     return result
   }
 
-  async insert({ fields, context, input, headers}) { //TODO: fix formatting 
-    const queryStr = `
-      mutation Movies_insert($input: [training_movies_insert_input!]!) {
-        training {
-          movies_insert(input: $input) {
-            ${fields}
-          }
-        }
-      }
-    `;
-
+  async insert({ fields, context, input, headers}) {
     const variables = {
       input,
     };
 
     const result = await query({
-      query: queryStr, 
+      query:`
+        mutation Movies_insert($input: [training_movies_insert_input!]!) {
+          training {
+            movies_insert(input: $input) {
+              ${fields}
+            }
+          }
+        }
+      `, 
       variables, 
       url: this._graphUrl,
       headers,
@@ -58,23 +56,44 @@ class Movies {
     return result
   }
 
-  async remove({ fields, context, input, headers}) {
-    const queryStr = `
-      mutation Movies_remove($input: training_movies_remove_input) {
-        training{
-          movies_remove(input: $input) {
-            ${fields}
+  async populate({ fields, context, input, headers}) { 
+    const result = await query({
+      query: `
+        mutation Movies_populate {
+          training {
+            movies_populate {      
+				      success
+				      message
+
+            }
           }
         }
-      }
-    `;
+      `, 
+      url: this._graphUrl,
+      headers,
+      key: "training.movies_populate",
+      clean: true
+    });
 
+    console.log("libbbbbbb", result)
+    return result
+  }
+
+  async remove({ fields, context, input, headers}) {
     const variables = {
       input,
     };
 
     const result = await query({
-      query: queryStr, 
+      query: `
+        mutation Movies_remove($input: training_movies_remove_input) {
+          training{
+            movies_remove(input: $input) {
+              ${fields}
+            }
+          }
+        }
+      `, 
       variables, 
       url: this._graphUrl,
       headers,
