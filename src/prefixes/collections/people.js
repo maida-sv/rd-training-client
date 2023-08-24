@@ -7,22 +7,20 @@ class People {
   }
 
   async find({ fields, context, input, headers}) {
-    const queryStr = `
-      query People_find($input: training_people_find_input) {
-        training {
-          people_find(input: $input) {
-            ${fields}
-          }
-        }
-      }
-    `;
-
     const variables = {
       input,
     };
 
     const result = await query({
-      query: queryStr, 
+      query: `
+      query People_find($input: training_people_find_input) {
+          training {
+            people_find(input: $input) {
+              ${fields}
+            }
+          }
+        }
+      `, 
       variables, 
       url: this._graphUrl,
       headers,
@@ -34,22 +32,20 @@ class People {
   }
 
   async insert({ fields, context, input, headers}) {
-    const queryStr = `
-      mutation People_insert($input: [training_people_insert_input!]!) {
-        training {
-          people_insert(input: $input) {
-            ${fields}
-          }
-        }
-      }
-    `;
-
     const variables = {
       input,
     };
 
     const result = await query({
-      query: queryStr, 
+      query: `
+        mutation People_insert($input: [training_people_insert_input!]!) {
+          training {
+            people_insert(input: $input) {
+              ${fields}
+            }
+          }
+        }
+      `, 
       variables, 
       url: this._graphUrl,
       headers,
@@ -60,23 +56,43 @@ class People {
     return result
   }
 
-  async remove({ fields, context, input, headers}) {
-    const queryStr = `
-      mutation People_remove($input: training_people_remove_input) {
-        training {
-          people_remove(input: $input) {
-            ${fields}
+  async populate({ fields, context, input, headers}) { 
+    const result = await query({
+      query: `
+        mutation People_populate {
+          training {
+            people_populate {      
+				      success
+				      message
+
+            }
           }
         }
-      }
-    `;
+      `, 
+      url: this._graphUrl,
+      headers,
+      key: "training.people_populate",
+      clean: true
+    });
 
+    return result
+  }
+
+  async remove({ fields, context, input, headers}) {
     const variables = {
       input,
     };
 
     const result = await query({
-      query: queryStr, 
+      query: `
+        mutation People_remove($input: training_people_remove_input) {
+          training {
+            people_remove(input: $input) {
+              ${fields}
+            }
+          }
+        }
+      `, 
       variables, 
       url: this._graphUrl,
       headers,

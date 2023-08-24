@@ -75,7 +75,6 @@ class Movies {
       clean: true
     });
 
-    console.log("libbbbbbb", result)
     return result
   }
 
